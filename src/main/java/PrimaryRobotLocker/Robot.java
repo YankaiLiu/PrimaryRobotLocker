@@ -14,11 +14,17 @@ public class Robot {
 
         for (int i = 0; i < LockerList.size(); i++) {
             Locker locker = LockerList.get(i);
-            if (locker.getCapacity() > 0) {
-                return new Ticket(i + 1);
-            }
+            Ticket ticket =  locker.store(bag, i + 1);
+            if (ticket == null) { continue; }
+            return ticket;
         }
         throw new PrimaryRobotLockerException("all locker has no capacity");
     }
 
+    public Bag pickUp(Ticket ticket) throws PrimaryRobotLockerException {
+        for (Locker locker : LockerList) {
+            return locker.getBag(ticket);
+        }
+        return null;
+    }
 }

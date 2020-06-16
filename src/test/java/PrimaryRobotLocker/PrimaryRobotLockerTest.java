@@ -11,6 +11,7 @@ package PrimaryRobotLocker;
  */
 
 import org.junit.Assert;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
@@ -21,6 +22,9 @@ import java.util.concurrent.locks.Lock;
 
 
 public class PrimaryRobotLockerTest {
+
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
 
     @Test
     public void should_return_ticket_given_a_bag_when_two_locker_have_capacity () throws PrimaryRobotLockerException {
@@ -48,9 +52,11 @@ public class PrimaryRobotLockerTest {
         Assert.assertEquals(ticket.getPosition(), 2);
     }
 
-    @Test(expected = PrimaryRobotLockerException.class)
+    @Test()
     public void should_reminder_lockers_are_full_given_a_bag_when_first_locker_and_second_locker_are_full() throws PrimaryRobotLockerException {
 
+        thrown.expect(PrimaryRobotLockerException.class);
+        thrown.expectMessage("all locker has no capacity");
 
         Bag bag = new Bag();
         Locker firstLocker = new Locker(0);
@@ -58,5 +64,20 @@ public class PrimaryRobotLockerTest {
         List lockerList = Arrays.asList(firstLocker, secondLocker);
         Robot robot = new Robot(lockerList);
         Ticket ticket = robot.store(bag);
+    }
+
+    @Test
+    public void should_reminder_invalid_ticket_given_invalid_ticket_when_pick_up_bag() throws PrimaryRobotLockerException {
+
+        thrown.expect(PrimaryRobotLockerException.class);
+        thrown.expectMessage("invalid ticket");
+
+        Bag bag = new Bag();
+        Locker firstLocker = new Locker(1);
+        Locker secondLocker = new Locker(1);
+        List lockerList = Arrays.asList(firstLocker, secondLocker);
+        Robot robot = new Robot(lockerList);
+
+        robot.pickUp(new Ticket(0));
     }
 }
