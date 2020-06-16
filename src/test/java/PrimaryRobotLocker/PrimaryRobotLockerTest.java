@@ -97,4 +97,19 @@ public class PrimaryRobotLockerTest {
         robot.pickUp(ticket);
         robot.pickUp(ticket);
     }
+
+    @Test
+    public void should_get_bag_given_valid_ticket_when_pick_up_bag() throws PrimaryRobotLockerException {
+        Bag bag = new Bag();
+        Locker firstLocker = new Locker(1);
+        Locker secondLocker = new Locker(2);
+        List lockerList = Arrays.asList(firstLocker, secondLocker);
+        Robot robot = new Robot(lockerList);
+        Ticket ticket = robot.store(bag);
+
+        Bag bagPickedUp = robot.pickUp(ticket);
+
+        Assert.assertEquals(bagPickedUp, bag);
+    }
+
 }
