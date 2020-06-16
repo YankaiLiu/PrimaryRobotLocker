@@ -80,4 +80,21 @@ public class PrimaryRobotLockerTest {
 
         robot.pickUp(new Ticket(0));
     }
+
+    @Test
+    public void should_reminder_ticket_has_benn_used_given_used_ticket_when_pick_up_bag() throws PrimaryRobotLockerException {
+
+        thrown.expect(PrimaryRobotLockerException.class);
+        thrown.expectMessage("this ticket has been used");
+
+        Bag bag = new Bag();
+        Locker firstLocker = new Locker(1);
+        Locker secondLocker = new Locker(2);
+        List lockerList = Arrays.asList(firstLocker, secondLocker);
+        Robot robot = new Robot(lockerList);
+        Ticket ticket = robot.store(bag);
+
+        robot.pickUp(ticket);
+        robot.pickUp(ticket);
+    }
 }
