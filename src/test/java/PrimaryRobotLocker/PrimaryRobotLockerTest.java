@@ -56,7 +56,7 @@ public class PrimaryRobotLockerTest {
     public void should_reminder_lockers_are_full_given_a_bag_when_first_locker_and_second_locker_are_full() throws PrimaryRobotLockerException {
 
         thrown.expect(PrimaryRobotLockerException.class);
-        thrown.expectMessage("all locker has no capacity");
+        thrown.expectMessage(ExceptionMessages.NO_CAPACITY);
 
         Bag bag = new Bag();
         Locker firstLocker = new Locker(0);
@@ -70,7 +70,7 @@ public class PrimaryRobotLockerTest {
     public void should_reminder_invalid_ticket_given_invalid_ticket_when_pick_up_bag() throws PrimaryRobotLockerException {
 
         thrown.expect(PrimaryRobotLockerException.class);
-        thrown.expectMessage("invalid ticket");
+        thrown.expectMessage(ExceptionMessages.INVALID_TICKET);
 
         Bag bag = new Bag();
         Locker firstLocker = new Locker(1);
@@ -85,7 +85,7 @@ public class PrimaryRobotLockerTest {
     public void should_reminder_ticket_has_benn_used_given_used_ticket_when_pick_up_bag() throws PrimaryRobotLockerException {
 
         thrown.expect(PrimaryRobotLockerException.class);
-        thrown.expectMessage("this ticket has been used");
+        thrown.expectMessage(ExceptionMessages.TICKET_HAS_BEEN_USED);
 
         Bag bag = new Bag();
         Locker firstLocker = new Locker(1);

@@ -4,13 +4,11 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.locks.Lock;
 
 public class Locker {
 
     private int Capacity;
     private Map<Ticket, Bag> Bags = new HashMap<>();
-    private Set<Ticket> oldTickets = new HashSet<>();
 
     public Locker(int capacity) {
         Capacity = capacity;
@@ -31,19 +29,7 @@ public class Locker {
         return ticket;
     }
 
-    public Bag getBag(Ticket ticket) throws PrimaryRobotLockerException {
-
-        if (oldTickets.contains(ticket)) {
-            throw new PrimaryRobotLockerException("this ticket has been used");
-        }
-
-        Bag bag = Bags.get(ticket);
-        if (bag != null) {
-            Bags.remove(ticket);
-            oldTickets.add(ticket);
-            return bag;
-        }
-
-        throw new PrimaryRobotLockerException("invalid ticket");
+    public Bag getBag(Ticket ticket) {
+        return Bags.get(ticket);
     }
 }

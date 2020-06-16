@@ -1,10 +1,13 @@
 package PrimaryRobotLocker;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class Robot {
 
     private List<Locker> LockerList;
+    private Set<Ticket> oldTickets = new HashSet<>();
 
     public Robot(List<Locker> lockerList) {
         LockerList = lockerList;
@@ -15,16 +18,21 @@ public class Robot {
         for (int i = 0; i < LockerList.size(); i++) {
             Locker locker = LockerList.get(i);
             Ticket ticket =  locker.store(bag, i + 1);
-            if (ticket == null) { continue; }
-            return ticket;
+            if (ticket != null) { return ticket; }
         }
-        throw new PrimaryRobotLockerException("all locker has no capacity");
+        throw new PrimaryRobotLockerException(ExceptionMessages.NO_CAPACITY);
     }
 
     public Bag pickUp(Ticket ticket) throws PrimaryRobotLockerException {
-        for (Locker locker : LockerList) {
-            return locker.getBag(ticket);
+        if (oldTickets.contains(ticket)) {
+            throw new PrimaryRobotLockerException(ExceptionMessages.TICKET_HAS_BEEN_USED);
         }
-        return null;
+        for (Locker locker : LockerList) {
+            Bag bag = locker.getBag(ticket);
+            if (bag == null) { continue; }
+            oldTickets.add(ticket);
+            return bag;
+        }
+        throw new PrimaryRobotLockerException(ExceptionMessages.INVALID_TICKET);
     }
 }
