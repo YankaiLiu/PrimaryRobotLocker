@@ -29,8 +29,21 @@ public class PrimaryRobotLockerTest {
         List lockerList = Arrays.asList(firstLocker, secondLocker);
         Robot robot = new Robot(lockerList);
 
-        Ticket ticket = robot.sotre(bag);
+        Ticket ticket = robot.store(bag);
         Assert.assertNotNull(ticket);
         Assert.assertEquals(ticket.getPosition(), 1);
+    }
+
+    @Test
+    public void should_return_ticket_and_save_bag_to_second_locker_given_a_bag_when_first_locker_is_full_and_second_locker_have_capacity() {
+        Bag bag = new Bag();
+        Locker firstLocker = new Locker(0);
+        Locker secondLocker = new Locker(2);
+        List lockerList = Arrays.asList(firstLocker, secondLocker);
+        Robot robot = new Robot(lockerList);
+
+        Ticket ticket = robot.store(bag);
+        Assert.assertNotNull(ticket);
+        Assert.assertEquals(ticket.getPosition(), 2);
     }
 }

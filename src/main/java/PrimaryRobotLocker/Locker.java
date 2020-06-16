@@ -13,4 +13,8 @@ public class Locker {
     public Locker() {
         Capacity = 2;
     }
+
+    public int getCapacity() {
+        return Capacity;
+    }
 }
