@@ -10,7 +10,7 @@ public class Robot {
         LockerList = lockerList;
     }
 
-    public Ticket store(Bag bag) {
+    public Ticket store(Bag bag) throws PrimaryRobotLockerException {
 
         for (int i = 0; i < LockerList.size(); i++) {
             Locker locker = LockerList.get(i);
@@ -18,7 +18,7 @@ public class Robot {
                 return new Ticket(i + 1);
             }
         }
-        return null;
+        throw new PrimaryRobotLockerException("all locker has no capacity");
     }
 
 }

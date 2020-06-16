@@ -12,6 +12,7 @@ package PrimaryRobotLocker;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import java.lang.reflect.Array;
 import java.util.Arrays;
@@ -22,7 +23,7 @@ import java.util.concurrent.locks.Lock;
 public class PrimaryRobotLockerTest {
 
     @Test
-    public void should_return_ticket_given_a_bag_when_two_locker_have_capacity () {
+    public void should_return_ticket_given_a_bag_when_two_locker_have_capacity () throws PrimaryRobotLockerException {
         Bag bag = new Bag();
         Locker firstLocker = new Locker(1);
         Locker secondLocker = new Locker(2);
@@ -35,7 +36,7 @@ public class PrimaryRobotLockerTest {
     }
 
     @Test
-    public void should_return_ticket_and_save_bag_to_second_locker_given_a_bag_when_first_locker_is_full_and_second_locker_have_capacity() {
+    public void should_return_ticket_and_save_bag_to_second_locker_given_a_bag_when_first_locker_is_full_and_second_locker_have_capacity() throws PrimaryRobotLockerException {
         Bag bag = new Bag();
         Locker firstLocker = new Locker(0);
         Locker secondLocker = new Locker(2);
@@ -45,5 +46,17 @@ public class PrimaryRobotLockerTest {
         Ticket ticket = robot.store(bag);
         Assert.assertNotNull(ticket);
         Assert.assertEquals(ticket.getPosition(), 2);
+    }
+
+    @Test(expected = PrimaryRobotLockerException.class)
+    public void should_reminder_lockers_are_full_given_a_bag_when_first_locker_and_second_locker_are_full() throws PrimaryRobotLockerException {
+
+
+        Bag bag = new Bag();
+        Locker firstLocker = new Locker(0);
+        Locker secondLocker = new Locker(0);
+        List lockerList = Arrays.asList(firstLocker, secondLocker);
+        Robot robot = new Robot(lockerList);
+        Ticket ticket = robot.store(bag);
     }
 }
