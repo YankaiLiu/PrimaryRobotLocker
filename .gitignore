@@ -12,6 +12,8 @@
 .idea/**/common_info.xml
 .idea/**
 
+.gradle/*
+
 
 # Sensitive or high-churn files
 .idea/**/dataSources/
