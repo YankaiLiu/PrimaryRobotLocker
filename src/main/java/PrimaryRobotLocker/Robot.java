@@ -9,8 +9,8 @@ import java.util.Set;
 
 public class Robot {
 
-    private List<Locker> lockers;
-    private Set<Ticket> oldTickets = new HashSet<>();
+    protected List<Locker> lockers;
+    protected Set<Ticket> oldTickets = new HashSet<>();
 
     public Robot(List<Locker> lockers) {
         this.lockers = lockers;

@@ -12,6 +12,10 @@ public class Locker {
         this.capacity = capacity;
     }
 
+    public int getCapacity() {
+        return capacity;
+    }
+
     public Ticket store(Bag bag, int position) {
         if (bags.size() == capacity) { return null; }
         Ticket ticket = new Ticket(position);
