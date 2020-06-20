@@ -5,7 +5,7 @@ given 2个locker,第一个剩余空间大于第二个,when smartLockerRobot存�
 given 2个locker, 2个剩余空间相同，when smartLockerRobot存包 then包被存入第一个locker，返回票 -------done
 given 2个locker, 第2个剩余空间大于第一个，when smartLockerRobot存包 then包被存入第2个locker，返回票 ------done
 given 2个locker , 没有剩余空间， when smartLockerRobot存包 then存包失败,提示存包失败 -----done
-given 1个有效票据； when smartLockerRobot取包, then取包成功, 票据回收
+given 1个有效票据； when smartLockerRobot取包, then取包成功, 票据回收 ----done
 given 1个无效票据； when smartLockerRobot取包, then取包失败，提示票据无效
 given primaryLockerRobot和smartLockerRobot同时管理locker，提供1个smartLockerRobot的存包票；when primaryLockerRobot取包；then取包成功
 given primaryLockerRobot和smartLockerRobot同时管理locker，提供1个primaryLockerRobot的存包票；when smartLockerRobot取包；then取包成功
@@ -71,6 +71,18 @@ public class SmartRobotLockerTest {
         Ticket ticket = smartRobot.store(bag);
         Bag actualBag = smartRobot.pickUp(ticket);
         Assert.assertEquals(bag,actualBag);
+    }
+
+    @Test
+    public void should_return_my_saved_bag_given_1_invalid_ticket_when_smartRobot_pickup_bag() throws PrimaryRobotLockerException {
+        thrown.expect(PrimaryRobotLockerException.class);
+        thrown.expectMessage(ExceptionMessages.INVALID_TICKET);
+
+        Locker locker1 = new Locker(1);
+        Locker locker2 = new Locker(0);
+        SmartRobot smartRobot = new SmartRobot(Arrays.asList(locker1,locker2));
+        Ticket ticket = new Ticket(0);
+        smartRobot.pickUp(ticket);
     }
 
 }
