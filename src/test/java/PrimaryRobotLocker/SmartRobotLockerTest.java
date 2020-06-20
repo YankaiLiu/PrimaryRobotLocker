@@ -100,4 +100,18 @@ public class SmartRobotLockerTest {
         Assert.assertEquals(bag,actualBag);
     }
 
+    //given primaryLockerRobot和smartLockerRobot同时管理locker，提供1个primaryLockerRobot的存包票；when smartLockerRobot取包；then取包成功
+    @Test
+    public void should_return_my_saved_bag_given_1_primary_locker_robot_and_1_smart_locker_robot_and_they_manger_2_lockers_and_a_primary_locker_robot_given_a_ticket_when_smart_robot_pickup_bag() throws PrimaryRobotLockerException {
+        Locker locker1 = new Locker(1);
+        Locker locker2 = new Locker(0);
+        List<Locker> lockers = Arrays.asList(locker1, locker2);
+        SmartRobot smartRobot = new SmartRobot(lockers);
+        Robot robot = new Robot(lockers);
+        Bag bag = new Bag();
+        Ticket ticket = robot.store(bag);
+        Bag actualBag = smartRobot.pickUp(ticket);
+        Assert.assertEquals(bag,actualBag);
+    }
+
 }
