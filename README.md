@@ -1,4 +1,4 @@
-# Smart Locker Robot Tasking
+# Smart Robot Locker Tasking
 
 * given 2个locker,第一个剩余空间大于第二个,when smartLockerRobot存包 then包被存入第一个locker,返回票 -------done
 * given 2个locker, 2个剩余空间相同，when smartLockerRobot存包 then包被存入第一个locker，返回票 -------done
