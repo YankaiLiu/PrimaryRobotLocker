@@ -20,13 +20,20 @@ package PrimaryLockerRobot;
  * Given Locker Robot Manager 管理一个locker，一个robot； When Locker Robot Manager 拿locker的票去 robot 取 robot存的包 ；Then 取包失败，提示票据无效；
  * Given Locker Robot Manager 管理一个locker，一个robot； When Locker Robot Manager 拿robot的票去 locker 取 robot存的包 ；Then 取包失败，提示票据无效；*/
 
+import PrimaryLockerRobot.Exception.ExceptionMessages;
+import PrimaryLockerRobot.Exception.LockerRobotManagerException;
 import PrimaryLockerRobot.Exception.PrimaryLockerRobotException;
 import org.junit.Assert;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import java.util.Arrays;
 
 public class LockerRobotManagerTest {
+
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
 
     @Test
     public void should_return_ticket_and_saved_in_1st_locker_when_manager_save_bag_given_manger_managed_two_locker_and_all_have_valid_capacity() throws PrimaryLockerRobotException {
@@ -48,5 +55,19 @@ public class LockerRobotManagerTest {
         Ticket ticket = manager.store(new Bag());
         Assert.assertNotNull(ticket);
         Assert.assertEquals(2, ticket.getPosition());
+    }
+
+    @Test
+    public void should_reminder_no_valid_capacity_when_manager_save_bag_given_manger_managed_two_locker_and_all_is_full() throws PrimaryLockerRobotException {
+
+        thrown.expect(LockerRobotManagerException.class);
+        thrown.expectMessage(ExceptionMessages.NO_CAPACITY);
+
+        Locker locker1 = new Locker(1);
+        Locker locker2 = new Locker(1);
+        LockerRobotManager manager = new LockerRobotManager(Arrays.asList(locker1,locker2));
+        manager.store(new Bag());
+        manager.store(new Bag());
+        manager.store(new Bag());
     }
 }
