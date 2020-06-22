@@ -26,11 +26,12 @@ public class SmartLockerRobotTest {
     public ExpectedException thrown = ExpectedException.none();
 
     @Test
-    public void should_return_a_ticket_when_smartRobot_save_bag_given_2_lockers_and_the_first_has_more_capacity_than_2nd() throws PrimaryLockerRobotException {
+    public void should_return_a_ticket_and_saved_in_1st_locker_when_smartRobot_save_bag_given_2_lockers_and_the_first_has_more_capacity_than_2nd() throws PrimaryLockerRobotException {
         Locker locker1 = new Locker(10);
         Locker locker2 = new Locker(2);
         SmartRobot smartRobot = new SmartRobot(Arrays.asList(locker1,locker2));
         Ticket ticket = smartRobot.store(new Bag());
+        Assert.assertNotNull(ticket);
         Assert.assertEquals(1,ticket.getPosition());
     }
 
