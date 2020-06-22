@@ -26,7 +26,7 @@ public class SmartRobotLockerTest {
     public ExpectedException thrown = ExpectedException.none();
 
     @Test
-    public void should_return_a_ticket_given_2_lockers_and_the_first_has_more_capacity_than_2nd_when_smartRobot_save_bag() throws PrimaryRobotLockerException {
+    public void should_return_a_ticket_when_smartRobot_save_bag_given_2_lockers_and_the_first_has_more_capacity_than_2nd() throws PrimaryRobotLockerException {
         Locker locker1 = new Locker(10);
         Locker locker2 = new Locker(2);
         SmartRobot smartRobot = new SmartRobot(Arrays.asList(locker1,locker2));
@@ -35,7 +35,7 @@ public class SmartRobotLockerTest {
     }
 
     @Test
-    public void should_return_a_ticket_given_2_lockers_and_the_1st_has_same_capacity_with_2nd_when_smartRobot_save_bag() throws PrimaryRobotLockerException {
+    public void should_return_a_ticket_when_smartRobot_save_bag_given_2_lockers_and_the_1st_has_same_capacity_with_2nd() throws PrimaryRobotLockerException {
         Locker locker1 = new Locker(2);
         Locker locker2 = new Locker(2);
         SmartRobot smartRobot = new SmartRobot(Arrays.asList(locker1,locker2));
@@ -44,7 +44,7 @@ public class SmartRobotLockerTest {
     }
 
     @Test
-    public void should_return_a_ticket_given_2_lockers_and_the_first_has_less_capacity_than_2nd_when_smartRobot_save_bag() throws PrimaryRobotLockerException {
+    public void should_return_a_ticket_when_smartRobot_save_bag_given_2_lockers_and_the_first_has_less_capacity_than_2nd() throws PrimaryRobotLockerException {
         Locker locker1 = new Locker(2);
         Locker locker2 = new Locker(10);
         SmartRobot smartRobot = new SmartRobot(Arrays.asList(locker1,locker2));
@@ -53,7 +53,7 @@ public class SmartRobotLockerTest {
     }
 
     @Test
-    public void should_return_a_ticket_given_2_lockers_and_the_1st_and_2nd_has_no_capacity_when_smartRobot_save_bag() throws PrimaryRobotLockerException {
+    public void should_return_a_ticket_when_smartRobot_save_bag_given_2_lockers_and_the_1st_and_2nd_has_no_capacity() throws PrimaryRobotLockerException {
         thrown.expect(PrimaryRobotLockerException.class);
         thrown.expectMessage(ExceptionMessages.NO_CAPACITY);
 
@@ -64,7 +64,7 @@ public class SmartRobotLockerTest {
     }
 
     @Test
-    public void should_return_my_saved_bag_given_1_valid_ticket_when_smartRobot_pickup_bag() throws PrimaryRobotLockerException {
+    public void should_return_my_saved_bag_when_smartRobot_pickup_bag_given_1_valid_ticket() throws PrimaryRobotLockerException {
         Locker locker1 = new Locker(1);
         Locker locker2 = new Locker(0);
         SmartRobot smartRobot = new SmartRobot(Arrays.asList(locker1,locker2));
@@ -75,7 +75,7 @@ public class SmartRobotLockerTest {
     }
 
     @Test
-    public void should_return_my_saved_bag_given_1_invalid_ticket_when_smartRobot_pickup_bag() throws PrimaryRobotLockerException {
+    public void should_return_my_saved_bag_when_smartRobot_pickup_bag_given_1_invalid_ticket() throws PrimaryRobotLockerException {
         thrown.expect(PrimaryRobotLockerException.class);
         thrown.expectMessage(ExceptionMessages.INVALID_TICKET);
 
@@ -88,7 +88,7 @@ public class SmartRobotLockerTest {
 
     //given primaryLockerRobot和smartLockerRobot同时管理locker，提供1个smartLockerRobot的存包票；when primaryLockerRobot取包；then取包成功
     @Test
-    public void should_return_my_saved_bag_given_1_primary_locker_robot_and_1_smart_locker_robot_and_they_manger_2_lockers_and_a_smart_locker_robot_given_a_ticket_when_primary_robot_pickup_bag() throws PrimaryRobotLockerException {
+    public void should_return_my_saved_bag_when_primary_robot_pickup_bag_given_1_primary_locker_robot_and_1_smart_locker_robot_and_they_manger_2_lockers_and_a_smart_locker_robot_given_a_ticket() throws PrimaryRobotLockerException {
         Locker locker1 = new Locker(1);
         Locker locker2 = new Locker(0);
         List<Locker> lockers = Arrays.asList(locker1, locker2);
@@ -102,7 +102,7 @@ public class SmartRobotLockerTest {
 
     //given primaryLockerRobot和smartLockerRobot同时管理locker，提供1个primaryLockerRobot的存包票；when smartLockerRobot取包；then取包成功
     @Test
-    public void should_return_my_saved_bag_given_1_primary_locker_robot_and_1_smart_locker_robot_and_they_manger_2_lockers_and_a_primary_locker_robot_given_a_ticket_when_smart_robot_pickup_bag() throws PrimaryRobotLockerException {
+    public void should_return_my_saved_bag_when_smart_robot_pickup_bag_given_1_primary_locker_robot_and_1_smart_locker_robot_and_they_manger_2_lockers_and_a_primary_locker_robot_given_a_ticket_when_smart_robot_pickup_bag() throws PrimaryRobotLockerException {
         Locker locker1 = new Locker(1);
         Locker locker2 = new Locker(0);
         List<Locker> lockers = Arrays.asList(locker1, locker2);
