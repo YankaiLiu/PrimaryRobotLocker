@@ -1,4 +1,4 @@
-package PrimaryRobotLocker.Exception;
+package PrimaryLockerRobot.Exception;
 
 public class ExceptionMessages {
 

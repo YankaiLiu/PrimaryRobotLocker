@@ -1,4 +1,4 @@
-package PrimaryRobotLocker;
+package PrimaryLockerRobot;
 
 import java.util.HashMap;
 import java.util.Map;

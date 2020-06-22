@@ -1,7 +1,7 @@
-package PrimaryRobotLocker;
+package PrimaryLockerRobot;
 
-import PrimaryRobotLocker.Exception.ExceptionMessages;
-import PrimaryRobotLocker.Exception.PrimaryRobotLockerException;
+import PrimaryLockerRobot.Exception.ExceptionMessages;
+import PrimaryLockerRobot.Exception.PrimaryLockerRobotException;
 
 import java.util.List;
 
@@ -11,7 +11,7 @@ public class SmartRobot extends Robot{
     }
 
     @Override
-    public Ticket store(Bag bag) throws PrimaryRobotLockerException {
+    public Ticket store(Bag bag) throws PrimaryLockerRobotException {
 
         Locker savedLocker = lockers.get(0);
         for (int i = 0; i < lockers.size(); i++) {
@@ -21,7 +21,7 @@ public class SmartRobot extends Robot{
             }
         }
         Ticket ticket = savedLocker.store(bag,lockers.indexOf(savedLocker)+1);
-        if(ticket==null) {throw new PrimaryRobotLockerException(ExceptionMessages.NO_CAPACITY);}
+        if(ticket==null) {throw new PrimaryLockerRobotException(ExceptionMessages.NO_CAPACITY);}
         return ticket;
     }
 }

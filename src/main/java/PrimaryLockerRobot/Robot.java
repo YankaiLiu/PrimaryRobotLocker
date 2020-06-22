@@ -1,7 +1,7 @@
-package PrimaryRobotLocker;
+package PrimaryLockerRobot;
 
-import PrimaryRobotLocker.Exception.ExceptionMessages;
-import PrimaryRobotLocker.Exception.PrimaryRobotLockerException;
+import PrimaryLockerRobot.Exception.ExceptionMessages;
+import PrimaryLockerRobot.Exception.PrimaryLockerRobotException;
 
 import java.util.HashSet;
 import java.util.List;
@@ -16,19 +16,19 @@ public class Robot {
         this.lockers = lockers;
     }
 
-    public Ticket store(Bag bag) throws PrimaryRobotLockerException {
+    public Ticket store(Bag bag) throws PrimaryLockerRobotException {
 
         for (int i = 0; i < lockers.size(); i++) {
             Locker locker = lockers.get(i);
             Ticket ticket =  locker.store(bag, i + 1);
             if (ticket != null) { return ticket; }
         }
-        throw new PrimaryRobotLockerException(ExceptionMessages.NO_CAPACITY);
+        throw new PrimaryLockerRobotException(ExceptionMessages.NO_CAPACITY);
     }
 
-    public Bag pickUp(Ticket ticket) throws PrimaryRobotLockerException {
+    public Bag pickUp(Ticket ticket) throws PrimaryLockerRobotException {
         if (oldTickets.contains(ticket)) {
-            throw new PrimaryRobotLockerException(ExceptionMessages.TICKET_HAS_BEEN_USED);
+            throw new PrimaryLockerRobotException(ExceptionMessages.TICKET_HAS_BEEN_USED);
         }
         for (Locker locker : lockers) {
             Bag bag = locker.getBag(ticket);
@@ -36,6 +36,6 @@ public class Robot {
             oldTickets.add(ticket);
             return bag;
         }
-        throw new PrimaryRobotLockerException(ExceptionMessages.INVALID_TICKET);
+        throw new PrimaryLockerRobotException(ExceptionMessages.INVALID_TICKET);
     }
 }
