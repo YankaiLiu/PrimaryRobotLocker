@@ -29,7 +29,7 @@ import java.util.Arrays;
 public class LockerRobotManagerTest {
 
     @Test
-    public void should_return_ticket_and_saved_in_1st_lockerwhen_manager_save_bag_given_manger_managed_two_locker_and_all_have_valid_capacity() throws PrimaryLockerRobotException {
+    public void should_return_ticket_and_saved_in_1st_locker_when_manager_save_bag_given_manger_managed_two_locker_and_all_have_valid_capacity() throws PrimaryLockerRobotException {
         Bag bag = new Bag();
         Locker locker1 = new Locker(5);
         Locker locker2 = new Locker(5);
@@ -39,4 +39,14 @@ public class LockerRobotManagerTest {
         Assert.assertEquals(1,ticket.getPosition());
     }
 
+    @Test
+    public void should_return_ticket_and_saved_in_2nd_locker_when_manager_save_bag_given_manger_managed_two_locker_and_1st_locker_is_full_2nd_locker_have_valid_capacity() throws PrimaryLockerRobotException {
+        Locker locker1 = new Locker(1);
+        Locker locker2 = new Locker(5);
+        LockerRobotManager manager = new LockerRobotManager(Arrays.asList(locker1,locker2));
+        manager.store(new Bag());
+        Ticket ticket = manager.store(new Bag());
+        Assert.assertNotNull(ticket);
+        Assert.assertEquals(2, ticket.getPosition());
+    }
 }
