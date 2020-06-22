@@ -1,9 +1,11 @@
-# Primary Locker Robot Tasking
+# Smart Robot Locker Tasking
 
-* Given:  Robot 管理两个locker， 两个locker都有可用的容量； When: robot 存包；Then: 成功存入第一个Locker， 返回票据。
-* Given:  Robot 管理两个locker，第一个Locker已存满，第二个Locker有可用容量； When: robot 存包；Then: 成功存入第一个Locker， 返回票据。
-* Given:  Robot 管理两个locker，两个Locker都满了； When: robot 存包；Then: 存包失败，提示储物柜已满
-* Given：Robot 管理两个Locker，有一张无效的票；When：robot 取包； Then：取包失败，提示票据不合法
-* Given：Robot 管理两个Locker，有一张已经取过的票；When：robot 取包； Then：取包失败，提示已取包
-* Given：Robot 管理两个locker，有一张有效的票；When：robot 取包;  Then: 取包成功。
+* given 2个locker,第一个剩余空间大于第二个,when smartLockerRobot存包 then包被存入第一个locker,返回票 -------done
+* given 2个locker, 2个剩余空间相同，when smartLockerRobot存包 then包被存入第一个locker，返回票 -------done
+* given 2个locker, 第2个剩余空间大于第一个，when smartLockerRobot存包 then包被存入第2个locker，返回票 ------done
+* given 2个locker , 没有剩余空间， when smartLockerRobot存包 then存包失败,提示存包失败 -----done
+* given 1个有效票据； when smartLockerRobot取包, then取包成功, 票据回收 ----done
+* given 1个无效票据； when smartLockerRobot取包, then取包失败，提示票据无效 -----done
+* given primaryLockerRobot和smartLockerRobot同时管理locker，提供1个smartLockerRobot的存包票；when primaryLockerRobot取包；then取包成功
+* given primaryLockerRobot和smartLockerRobot同时管理locker，提供1个primaryLockerRobot的存包票；when smartLockerRobot取包；then取包成功
 

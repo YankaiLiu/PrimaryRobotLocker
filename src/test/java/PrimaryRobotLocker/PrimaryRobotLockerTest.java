@@ -10,15 +10,15 @@ package PrimaryRobotLocker;
  * Given：Robot 管理两个locker，有一张有效的票；When：robot 取包;  Then: 取包成功。
  */
 
+import PrimaryRobotLocker.Exception.ExceptionMessages;
+import PrimaryRobotLocker.Exception.PrimaryRobotLockerException;
 import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.locks.Lock;
 
 
 public class PrimaryRobotLockerTest {
@@ -111,5 +111,4 @@ public class PrimaryRobotLockerTest {
 
         Assert.assertEquals(bagPickedUp, bag);
     }
-
 }

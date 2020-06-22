@@ -1,35 +1,29 @@
 package PrimaryRobotLocker;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
 public class Locker {
 
-    private int Capacity;
-    private Map<Ticket, Bag> Bags = new HashMap<>();
+    private int capacity;
+    private Map<Ticket, Bag> bags = new HashMap<>();
 
     public Locker(int capacity) {
-        Capacity = capacity;
-    }
-
-    public Locker() {
-        Capacity = 2;
+        this.capacity = capacity;
     }
 
     public int getCapacity() {
-        return Capacity;
+        return capacity;
     }
 
     public Ticket store(Bag bag, int position) {
-        if (Bags.size() == Capacity) { return null; }
+        if (bags.size() == capacity) { return null; }
         Ticket ticket = new Ticket(position);
-        Bags.put(ticket, bag);
+        bags.put(ticket, bag);
         return ticket;
     }
 
     public Bag getBag(Ticket ticket) {
-        return Bags.get(ticket);
+        return bags.get(ticket);
     }
 }
