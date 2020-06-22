@@ -13,6 +13,7 @@ given primaryLockerRobot和smartLockerRobot同时管理locker，提供1个primar
 
 import PrimaryLockerRobot.Exception.ExceptionMessages;
 import PrimaryLockerRobot.Exception.PrimaryLockerRobotException;
+import PrimaryLockerRobot.Exception.SmartLockerRobotException;
 import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
@@ -26,7 +27,7 @@ public class SmartLockerRobotTest {
     public ExpectedException thrown = ExpectedException.none();
 
     @Test
-    public void should_return_a_ticket_and_saved_in_1st_locker_when_smartRobot_save_bag_given_2_lockers_and_the_first_has_more_capacity_than_2nd() throws PrimaryLockerRobotException {
+    public void should_return_a_ticket_and_saved_in_1st_locker_when_smartRobot_save_bag_given_2_lockers_and_the_first_has_more_capacity_than_2nd() throws SmartLockerRobotException {
         Locker locker1 = new Locker(10);
         Locker locker2 = new Locker(2);
         SmartRobot smartRobot = new SmartRobot(Arrays.asList(locker1,locker2));
@@ -36,7 +37,7 @@ public class SmartLockerRobotTest {
     }
 
     @Test
-    public void should_return_a_ticket_when_smartRobot_save_bag_given_2_lockers_and_the_1st_has_same_capacity_with_2nd() throws PrimaryLockerRobotException {
+    public void should_return_a_ticket_when_smartRobot_save_bag_given_2_lockers_and_the_1st_has_same_capacity_with_2nd() throws SmartLockerRobotException {
         Locker locker1 = new Locker(2);
         Locker locker2 = new Locker(2);
         SmartRobot smartRobot = new SmartRobot(Arrays.asList(locker1,locker2));
@@ -45,7 +46,7 @@ public class SmartLockerRobotTest {
     }
 
     @Test
-    public void should_return_a_ticket_when_smartRobot_save_bag_given_2_lockers_and_the_first_has_less_capacity_than_2nd() throws PrimaryLockerRobotException {
+    public void should_return_a_ticket_when_smartRobot_save_bag_given_2_lockers_and_the_first_has_less_capacity_than_2nd() throws SmartLockerRobotException {
         Locker locker1 = new Locker(2);
         Locker locker2 = new Locker(10);
         SmartRobot smartRobot = new SmartRobot(Arrays.asList(locker1,locker2));
@@ -54,7 +55,7 @@ public class SmartLockerRobotTest {
     }
 
     @Test
-    public void should_return_a_ticket_when_smartRobot_save_bag_given_2_lockers_and_the_1st_and_2nd_has_no_capacity() throws PrimaryLockerRobotException {
+    public void should_return_a_ticket_when_smartRobot_save_bag_given_2_lockers_and_the_1st_and_2nd_has_no_capacity() throws SmartLockerRobotException {
         thrown.expect(PrimaryLockerRobotException.class);
         thrown.expectMessage(ExceptionMessages.NO_CAPACITY);
 
@@ -65,7 +66,7 @@ public class SmartLockerRobotTest {
     }
 
     @Test
-    public void should_return_my_saved_bag_when_smartRobot_pickup_bag_given_1_valid_ticket() throws PrimaryLockerRobotException {
+    public void should_return_my_saved_bag_when_smartRobot_pickup_bag_given_1_valid_ticket() throws SmartLockerRobotException {
         Locker locker1 = new Locker(1);
         Locker locker2 = new Locker(0);
         SmartRobot smartRobot = new SmartRobot(Arrays.asList(locker1,locker2));
@@ -76,7 +77,7 @@ public class SmartLockerRobotTest {
     }
 
     @Test
-    public void should_return_my_saved_bag_when_smartRobot_pickup_bag_given_1_invalid_ticket() throws PrimaryLockerRobotException {
+    public void should_return_my_saved_bag_when_smartRobot_pickup_bag_given_1_invalid_ticket() throws SmartLockerRobotException {
         thrown.expect(PrimaryLockerRobotException.class);
         thrown.expectMessage(ExceptionMessages.INVALID_TICKET);
 

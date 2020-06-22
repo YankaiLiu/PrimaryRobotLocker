@@ -2,6 +2,7 @@ package PrimaryLockerRobot;
 
 import PrimaryLockerRobot.Exception.ExceptionMessages;
 import PrimaryLockerRobot.Exception.PrimaryLockerRobotException;
+import PrimaryLockerRobot.Exception.SmartLockerRobotException;
 
 import java.util.HashSet;
 import java.util.List;
