@@ -3,17 +3,31 @@ package PrimaryLockerRobot;
 import PrimaryLockerRobot.Exception.ExceptionMessages;
 import PrimaryLockerRobot.Exception.LockerRobotManagerException;
 import PrimaryLockerRobot.Exception.PrimaryLockerRobotException;
-import PrimaryLockerRobot.Exception.SmartLockerRobotException;
 
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 
 public class LockerRobotManager extends Robot {
 
+    static class Management {
+
+        enum Owner {
+            robot,
+            locker,
+        }
+
+        int position;
+        Owner owner;
+
+        Management(Owner owner, int position) {
+            this.owner = owner;
+            this.position = position;
+        }
+    }
+
     private List<Robot> robots;
     private HashMap<Ticket, Robot> management = new HashMap<>();
+    private HashMap<Ticket, Locker> lockerManagement = new HashMap<>();
 
     public LockerRobotManager(List<Locker> lockers, List<Robot> robots) {
         super(lockers);
@@ -39,6 +53,8 @@ public class LockerRobotManager extends Robot {
         if (ticket == null) {
             try {
                 ticket = super.store(bag);
+                Locker locker = lockers.get(ticket.getPosition() - 1);
+                lockerManagement.put(ticket, locker);
                 return ticket;
             } catch (PrimaryLockerRobotException e) {
                 throw new LockerRobotManagerException(e.getMessage());
@@ -48,7 +64,18 @@ public class LockerRobotManager extends Robot {
         }
     }
 
-    public int managedBy(Ticket ticket) {
-        return robots.indexOf(management.get(ticket)) + 1;
+    public Management managedBy(Ticket ticket) throws LockerRobotManagerException {
+        int indexOfRobot =  robots.indexOf(management.get(ticket));
+        if (indexOfRobot >= 0) {
+            //find
+            return new Management(Management.Owner.robot, indexOfRobot + 1);
+        }
+
+        if (lockerManagement.get(ticket) != null) {
+            return new Management(Management.Owner.locker, ticket.getPosition());
+        }
+
+        throw new LockerRobotManagerException(ExceptionMessages.NO_VALID_OWNER);
     }
 }
+

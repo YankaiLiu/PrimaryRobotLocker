@@ -2,8 +2,6 @@ package PrimaryLockerRobot;
 
 
 /*
- * Given： Locker Robot Manager 管理一个locker 和1个robot，且均有可用空间； When： Locker Robot Manager 存包； Then： 成功由robot存入，返回票据；
- * Given： Locker Robot Manager 管理一个locker 和1个robot，locker有可用空间，但robot的locker已满； When： Locker Robot Manager 存包； Then： 成功存入locker，返回票据；
  * Given： Locker Robot Manager 管理一个locker 和1个robot，且均已存满； When： Locker Robot Manager 存包； Then： 存包失败，提示储物柜已满；
  * Given Locker Robot Manager 管理2个Locker，没有管理robot且票据有效，When Locker Robot Manager取包 Then 取包成功
  * Given Locker Robot Manager 管理2个Locker，没有管理robot且票据无效，When Locker Robot Manager取包 Then 取包失败，提示无效票据
@@ -80,8 +78,10 @@ public class LockerRobotManagerTest {
         Bag bag = new Bag();
         Ticket ticket = manager.store(bag);
 
+        LockerRobotManager.Management management = manager.managedBy(ticket);
         Assert.assertNotNull(ticket);
-        Assert.assertEquals(1, manager.managedBy(ticket));
+        Assert.assertEquals(LockerRobotManager.Management.Owner.robot, management.owner);
+        Assert.assertEquals(1, management.position);
     }
 
     @Test
@@ -99,8 +99,10 @@ public class LockerRobotManagerTest {
         Bag bag = new Bag();
         Ticket ticket = manager.store(bag);
 
+        LockerRobotManager.Management management = manager.managedBy(ticket);
         Assert.assertNotNull(ticket);
-        Assert.assertEquals(2, manager.managedBy(ticket));
+        Assert.assertEquals(LockerRobotManager.Management.Owner.robot, management.owner);
+        Assert.assertEquals(2, management.position);
     }
 
     @Test
@@ -122,8 +124,6 @@ public class LockerRobotManagerTest {
         manager.store(new Bag());
     }
 
-//     * Given： Locker Robot Manager 管理一个locker 和1个robot，且均有可用空间； When： Locker Robot Manager 存包； Then： 成功由robot存入，返回票据；
-
     @Test
     public void should_saved_by_robot_when_manager_save_bag_given_manger_managed_1_robot_and_1_locker_and_all_has_capacity() throws PrimaryLockerRobotException {
 
@@ -136,8 +136,31 @@ public class LockerRobotManagerTest {
         Bag bag = new Bag();
         Ticket ticket = manager.store(bag);
 
+        LockerRobotManager.Management management = manager.managedBy(ticket);
         Assert.assertNotNull(ticket);
-        Assert.assertEquals(1, manager.managedBy(ticket));
+        Assert.assertEquals(LockerRobotManager.Management.Owner.robot, management.owner);
+        Assert.assertEquals(1, management.position);
+    }
+
+    @Test
+    public void should_saved_by_robot_when_manager_save_bag_given_manger_managed_1_robot_and_1_locker_and_robot_is_full_locker_has_capacity() throws PrimaryLockerRobotException {
+
+        Locker locker1 = new Locker(1);
+        Locker locker2 = new Locker(1);
+        Robot robot1 = new Robot(Arrays.asList(locker2));
+
+        LockerRobotManager manager = new LockerRobotManager(Arrays.asList(locker1), Arrays.asList(robot1));
+
+        manager.store(new Bag());
+
+        Bag bag = new Bag();
+        Ticket ticket = manager.store(bag);
+
+        LockerRobotManager.Management management = manager.managedBy(ticket);
+
+        Assert.assertNotNull(ticket);
+        Assert.assertEquals(LockerRobotManager.Management.Owner.locker, management.owner);
+        Assert.assertEquals(1, management.position);
     }
 
 }
