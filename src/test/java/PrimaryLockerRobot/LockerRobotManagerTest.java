@@ -142,7 +142,7 @@ public class LockerRobotManagerTest {
     }
 
     @Test
-    public void should_saved_by_robot_when_manager_save_bag_given_manger_managed_1_robot_and_1_locker_and_robot_is_full_locker_has_capacity() throws PrimaryLockerRobotException {
+    public void should_saved_by_locker_when_manager_save_bag_given_manger_managed_1_robot_and_1_locker_and_robot_is_full_locker_has_capacity() throws PrimaryLockerRobotException {
 
         Locker locker1 = new Locker(1);
         Locker locker2 = new Locker(1);
@@ -180,5 +180,18 @@ public class LockerRobotManagerTest {
         manager.store(new Bag());
     }
 
+    @Test
+    public void should_return_bag_when_manager_pick_up_bag_given_manger_managed_two_lockers() throws PrimaryLockerRobotException {
+        Bag bag = new Bag();
+        Locker locker1 = new Locker(1);
+        Locker locker2 = new Locker(1);
+        LockerRobotManager manager = new LockerRobotManager(Arrays.asList(locker1,locker2), null);
+        Ticket ticket = manager.store(bag);
+
+        Bag pickedBag = manager.pickUp(ticket);
+
+        Assert.assertNotNull(pickedBag);
+        Assert.assertEquals(bag,pickedBag);
+    }
 
 }
