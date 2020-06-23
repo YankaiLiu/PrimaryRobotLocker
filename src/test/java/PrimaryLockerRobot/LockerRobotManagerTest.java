@@ -2,9 +2,6 @@ package PrimaryLockerRobot;
 
 
 /*
- * Given:  Locker Robot Manager 管理两个locker， 且两个locker 均有可用空间， Locker Robot Manger 未管理robot; When: Locker Robot manager 存包； Then: 成功存入第一个locker， 返回票据
- * Given: Locker Robot Manager 管理两个locker， 且第一个 locker已满， 第二个locker有可用空间， Locker Robot Manager 未管理 robot； When： Locker Robot Manager 存包； Then：成功存入第二个locker,返回票据；
- * Given： Locker Robot Manager 管理两个locker，且两个locker均已满，Locker Robot Manager未管理robot； When： Locker Robot Manager 存包； Then： 存包失败，提示储物柜已满；
  * Given： Locker Robot Manager 未管理locker， Locker Robot Manager 管理两个robot， 且两个robot管理的locker均有可用空间。 When： Locker Robot Manager 存包； Then： 成功有第1个robot存入，返回票据；
  * Given： Locker Robot Manager 未管理locker， Locker Robot Manager 管理两个robot，第1个robot的locker已存满，第2个robot的locker有可用空间 ； When： Locker Robot Manager 存包； Then： 成功有第2个robot存入，返回票据；
  * Given： Locker Robot Manager 未管理locker， Locker Robot Manager 管理两个robot，两个robot管理的locker均已满 ； When： Locker Robot Manager 存包； Then： 存包失败，提示储物柜已满；
@@ -40,7 +37,7 @@ public class LockerRobotManagerTest {
         Bag bag = new Bag();
         Locker locker1 = new Locker(5);
         Locker locker2 = new Locker(5);
-        LockerRobotManager manager = new LockerRobotManager(Arrays.asList(locker1,locker2));
+        LockerRobotManager manager = new LockerRobotManager(Arrays.asList(locker1,locker2), null);
         Ticket ticket = manager.store(bag);
         Assert.assertNotNull(ticket);
         Assert.assertEquals(1,ticket.getPosition());
@@ -50,7 +47,7 @@ public class LockerRobotManagerTest {
     public void should_return_ticket_and_saved_in_2nd_locker_when_manager_save_bag_given_manger_managed_two_locker_and_1st_locker_is_full_2nd_locker_have_valid_capacity() throws PrimaryLockerRobotException {
         Locker locker1 = new Locker(1);
         Locker locker2 = new Locker(5);
-        LockerRobotManager manager = new LockerRobotManager(Arrays.asList(locker1,locker2));
+        LockerRobotManager manager = new LockerRobotManager(Arrays.asList(locker1,locker2), null);
         manager.store(new Bag());
         Ticket ticket = manager.store(new Bag());
         Assert.assertNotNull(ticket);
@@ -65,9 +62,27 @@ public class LockerRobotManagerTest {
 
         Locker locker1 = new Locker(1);
         Locker locker2 = new Locker(1);
-        LockerRobotManager manager = new LockerRobotManager(Arrays.asList(locker1,locker2));
+        LockerRobotManager manager = new LockerRobotManager(Arrays.asList(locker1,locker2), null);
         manager.store(new Bag());
         manager.store(new Bag());
         manager.store(new Bag());
     }
+
+    @Test
+    public void should_saved_by_1st_robot_when_manager_save_bag_given_manger_managed_two_robot_and_all_have_capacity() throws PrimaryLockerRobotException {
+
+        Locker locker1 = new Locker(2);
+        Robot robot1 = new Robot(Arrays.asList(locker1));
+        Locker locker2 = new Locker(2);
+        Robot robot2 = new Robot(Arrays.asList(locker2));
+
+        LockerRobotManager manager = new LockerRobotManager(null, Arrays.asList(robot1,robot2));
+        Bag bag = new Bag();
+        Ticket ticket = manager.store(bag);
+
+        Assert.assertNotNull(ticket);
+        Assert.assertEquals(1, manager.managedBy(ticket));
+    }
+
+
 }

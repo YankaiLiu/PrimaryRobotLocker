@@ -3,6 +3,7 @@
 * Given:  Locker Robot Manager 管理两个locker， 且两个locker 均有可用空间， Locker Robot Manger 未管理robot; When: Locker Robot manager 存包； Then: 成功存入第一个locker， 返回票据
 * Given: Locker Robot Manager 管理两个locker， 且第一个 locker已满， 第二个locker有可用空间， Locker Robot Manager 未管理 robot； When： Locker Robot Manager 存包； Then：成功存入第二个locker,返回票据；
 * Given： Locker Robot Manager 管理两个locker，且两个locker均已满，Locker Robot Manager未管理robot； When： Locker Robot Manager 存包； Then： 存包失败，提示储物柜已满；
+* --
 * Given： Locker Robot Manager 未管理locker， Locker Robot Manager 管理两个robot， 且两个robot管理的locker均有可用空间。 When： Locker Robot Manager 存包； Then： 成功有第1个robot存入，返回票据；
 * Given： Locker Robot Manager 未管理locker， Locker Robot Manager 管理两个robot，第1个robot的locker已存满，第2个robot的locker有可用空间 ； When： Locker Robot Manager 存包； Then： 成功有第2个robot存入，返回票据；
 * Given： Locker Robot Manager 未管理locker， Locker Robot Manager 管理两个robot，两个robot管理的locker均已满 ； When： Locker Robot Manager 存包； Then： 存包失败，提示储物柜已满；
