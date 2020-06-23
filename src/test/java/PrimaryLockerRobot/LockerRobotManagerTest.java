@@ -2,7 +2,6 @@ package PrimaryLockerRobot;
 
 
 /*
- * Given： Locker Robot Manager 未管理locker， Locker Robot Manager 管理两个robot，两个robot管理的locker均已满 ； When： Locker Robot Manager 存包； Then： 存包失败，提示储物柜已满；
  * Given： Locker Robot Manager 管理一个locker 和1个robot，且均有可用空间； When： Locker Robot Manager 存包； Then： 成功由robot存入，返回票据；
  * Given： Locker Robot Manager 管理一个locker 和1个robot，locker有可用空间，但robot的locker已满； When： Locker Robot Manager 存包； Then： 成功存入locker，返回票据；
  * Given： Locker Robot Manager 管理一个locker 和1个robot，且均已存满； When： Locker Robot Manager 存包； Then： 存包失败，提示储物柜已满；
@@ -123,5 +122,22 @@ public class LockerRobotManagerTest {
         manager.store(new Bag());
     }
 
+//     * Given： Locker Robot Manager 管理一个locker 和1个robot，且均有可用空间； When： Locker Robot Manager 存包； Then： 成功由robot存入，返回票据；
+
+    @Test
+    public void should_saved_by_robot_when_manager_save_bag_given_manger_managed_1_robot_and_1_locker_and_all_has_capacity() throws PrimaryLockerRobotException {
+
+        Locker locker1 = new Locker(1);
+        Locker locker2 = new Locker(1);
+        Robot robot1 = new Robot(Arrays.asList(locker2));
+
+        LockerRobotManager manager = new LockerRobotManager(Arrays.asList(locker1), Arrays.asList(robot1));
+
+        Bag bag = new Bag();
+        Ticket ticket = manager.store(bag);
+
+        Assert.assertNotNull(ticket);
+        Assert.assertEquals(1, manager.managedBy(ticket));
+    }
 
 }
