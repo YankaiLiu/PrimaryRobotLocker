@@ -2,7 +2,6 @@ package PrimaryLockerRobot;
 
 
 /*
- * Given： Locker Robot Manager 管理一个locker 和1个robot，且均已存满； When： Locker Robot Manager 存包； Then： 存包失败，提示储物柜已满；
  * Given Locker Robot Manager 管理2个Locker，没有管理robot且票据有效，When Locker Robot Manager取包 Then 取包成功
  * Given Locker Robot Manager 管理2个Locker，没有管理robot且票据无效，When Locker Robot Manager取包 Then 取包失败，提示无效票据
  * Given Locker Robot Manager 没有管理Locker，且管理2个robot且票据有效，When Locker Robot Manager取包 Then 取包成功
@@ -162,5 +161,24 @@ public class LockerRobotManagerTest {
         Assert.assertEquals(LockerRobotManager.Management.Owner.locker, management.owner);
         Assert.assertEquals(1, management.position);
     }
+
+    @Test
+    public void should_reminder_has_no_capacity_when_manager_save_bag_given_manger_managed_1_robot_and_1_locker_all_is_full() throws LockerRobotManagerException {
+
+        thrown.expect(LockerRobotManagerException.class);
+        thrown.expectMessage(ExceptionMessages.NO_CAPACITY);
+
+        Locker locker1 = new Locker(1);
+        Locker locker2 = new Locker(1);
+        Robot robot1 = new Robot(Arrays.asList(locker2));
+
+        LockerRobotManager manager = new LockerRobotManager(Arrays.asList(locker1), Arrays.asList(robot1));
+
+        manager.store(new Bag());
+        manager.store(new Bag());
+
+        manager.store(new Bag());
+    }
+
 
 }
