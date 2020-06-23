@@ -2,7 +2,6 @@ package PrimaryLockerRobot;
 
 
 /*
- * Given Locker Robot Manager 管理2个Locker，没有管理robot且票据有效，When Locker Robot Manager取包 Then 取包成功
  * Given Locker Robot Manager 管理2个Locker，没有管理robot且票据无效，When Locker Robot Manager取包 Then 取包失败，提示无效票据
  * Given Locker Robot Manager 没有管理Locker，且管理2个robot且票据有效，When Locker Robot Manager取包 Then 取包成功
  * Given Locker Robot Manager 没有管理Locker，且管理2个robot且票据无效，When Locker Robot Manager取包 Then 取包失败，提示无效票据
@@ -181,7 +180,7 @@ public class LockerRobotManagerTest {
     }
 
     @Test
-    public void should_return_bag_when_manager_pick_up_bag_given_manger_managed_two_lockers() throws PrimaryLockerRobotException {
+    public void should_return_bag_when_manager_pick_up_bag_given_manger_managed_two_lockers_and_give_valid_ticket() throws PrimaryLockerRobotException {
         Bag bag = new Bag();
         Locker locker1 = new Locker(1);
         Locker locker2 = new Locker(1);
@@ -192,6 +191,20 @@ public class LockerRobotManagerTest {
 
         Assert.assertNotNull(pickedBag);
         Assert.assertEquals(bag,pickedBag);
+    }
+
+    @Test
+    public void should_return_bag_when_manager_pick_up_bag_given_manger_managed_two_lockers_and_give_invalid_ticket() throws LockerRobotManagerException {
+
+        thrown.expect(LockerRobotManagerException.class);
+        thrown.expectMessage(ExceptionMessages.INVALID_TICKET);
+
+        Bag bag = new Bag();
+        Locker locker1 = new Locker(1);
+        Locker locker2 = new Locker(1);
+        LockerRobotManager manager = new LockerRobotManager(Arrays.asList(locker1,locker2), null);
+
+        Bag pickedBag = manager.pickUp(new Ticket(0));
     }
 
 }

@@ -64,6 +64,16 @@ public class LockerRobotManager extends Robot {
         }
     }
 
+    @Override
+    public Bag pickUp(Ticket ticket) throws LockerRobotManagerException {
+        try {
+            return super.pickUp(ticket);
+        } catch (PrimaryLockerRobotException e) {
+            throw new LockerRobotManagerException(e.getMessage());
+        }
+
+    }
+
     public Management managedBy(Ticket ticket) throws LockerRobotManagerException {
         int indexOfRobot =  robots.indexOf(management.get(ticket));
         if (indexOfRobot >= 0) {
