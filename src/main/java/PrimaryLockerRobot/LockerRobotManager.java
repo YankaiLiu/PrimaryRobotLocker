@@ -67,7 +67,6 @@ public class LockerRobotManager extends Robot {
     @Override
     public Bag pickUp(Ticket ticket) throws LockerRobotManagerException {
 
-
         for (Robot robot : robots) {
             try {
                 Bag bag =  robot.pickUp(ticket);
