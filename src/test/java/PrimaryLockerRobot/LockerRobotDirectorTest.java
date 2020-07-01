@@ -96,8 +96,35 @@ public class LockerRobotDirectorTest {
         String report = lockerRobotDirector.report();
         //then
         Assert.assertEquals("M:    2    1\n" + "     L:    2    1",report);
+    }
+    /*
+    * Task2:
+- Given: LockerRobotDirector 管理一个 LockerRobotManager, LockerRobotManager 管理两个 Locker ，每个总容量为5，可用容量为2, 不管理 Robot
+- When: LockerRobotDirector 查看报表
+- Then: 返回报表
+    M 4 10
+        L 2 5
+        L 2 5
+        * */
+    @Test
+    public void should_return_report_when_director_see_report_given_director_managed_1_manager_and_manager_managed_2_lockers_and_twice_of_them_have_total_capaction_is_5_and_valid_capaction_is_2have_valid_capacity_1_and_total_capacity_2() throws LockerRobotManagerException {
+        //given
+        Locker locker1 = new Locker(5);
+        Locker locker2 = new Locker(5);
+        LockerRobotManager lockerRobotManager = new LockerRobotManager(Arrays.asList(locker1,locker2),Arrays.asList());
+        for(int i = 0;i<3;i++){
+            locker1.store(new Bag(),0);
+            locker2.store(new Bag(),1);
+        }
 
+        LockerRobotDirector lockerRobotDirector = new LockerRobotDirector(Arrays.asList(lockerRobotManager));
 
+        //when
+        String report = lockerRobotDirector.report();
+        //then
+        Assert.assertEquals(
+                "M:    10    4\n" + "     L:    5    2\n" + "     L:    5    2",
+                report);
     }
 
 }
