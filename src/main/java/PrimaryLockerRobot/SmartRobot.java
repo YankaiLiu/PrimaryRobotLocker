@@ -12,6 +12,24 @@ public class SmartRobot extends Robot{
     }
 
     @Override
+    public int getCapacity() {
+        int result = 0;
+        for (Locker locker : lockers) {
+            result += locker.getCapacity();
+        }
+        return result;
+    }
+
+    @Override
+    public int getLeftCapacity(){
+        int result = 0;
+        for (Locker locker : lockers) {
+            result += locker.getLeftCapacity();
+        }
+        return result;
+    }
+
+    @Override
     public Ticket store(Bag bag) throws SmartLockerRobotException {
 
         Locker savedLocker = lockers.get(0);

@@ -25,9 +25,33 @@ public class LockerRobotManager extends Robot {
         }
     }
 
-    private List<Robot> robots;
+    protected List<Robot> robots;
     private HashMap<Ticket, Robot> management = new HashMap<>();
     private HashMap<Ticket, Locker> lockerManagement = new HashMap<>();
+
+    @Override
+    public int getCapacity() {
+        int result = 0;
+        for (Locker locker : lockers) {
+            result += locker.getCapacity();
+        }
+        for (Robot robot : robots) {
+            result += robot.getCapacity();
+        }
+        return result;
+    }
+
+    @Override
+    public int getLeftCapacity() {
+        int result = 0;
+        for (Locker locker : lockers) {
+            result += locker.getLeftCapacity();
+        }
+        for (Robot robot : robots) {
+            result += robot.getLeftCapacity();
+        }
+        return result;
+    }
 
     public LockerRobotManager(List<Locker> lockers, List<Robot> robots) {
         super(lockers);
@@ -69,8 +93,10 @@ public class LockerRobotManager extends Robot {
 
         for (Robot robot : robots) {
             try {
-                Bag bag =  robot.pickUp(ticket);
-                if (bag == null) { continue; }
+                Bag bag = robot.pickUp(ticket);
+                if (bag == null) {
+                    continue;
+                }
                 oldTickets.add(ticket);
                 return bag;
             } catch (PrimaryLockerRobotException e) {
@@ -87,7 +113,7 @@ public class LockerRobotManager extends Robot {
     }
 
     public Management managedBy(Ticket ticket) throws LockerRobotManagerException {
-        int indexOfRobot =  robots.indexOf(management.get(ticket));
+        int indexOfRobot = robots.indexOf(management.get(ticket));
         if (indexOfRobot >= 0) {
             //find
             return new Management(Management.Owner.robot, indexOfRobot + 1);
