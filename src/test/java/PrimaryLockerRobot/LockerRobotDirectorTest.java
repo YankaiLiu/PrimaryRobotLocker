@@ -119,19 +119,6 @@ public class LockerRobotDirectorTest {
                 report);
     }
 
-    /*
-    * Task3:
-- Given: LockerRobotDirector 管理一个 LockerRobotManager, LockerRobotManager 管理两个 Locker ，每个总容量为5，可用容量为2, 管理一个 Robot,
-    Robot 管理两个 Locker，一个总容量为5，可用容量为3，一个总容量为8，可用容量为5
-- When: LockerRobotDirector 查看报表
-- Then: 返回报表
-    M 12 23
-        L 2 5
-        L 2 5
-        R 8 13
-            L 3 5
-            L 5 8
-    * */
     @Test
     public void should_return_report_when_director_see_report_given_director_managed_1_manager_and_manager_managed_2_lockers_and_1_robot_and_twice_of_locker_have_total_capaction_is_5_and_valid_capaction_is_2_have_valid_capacity_1_and_total_capacity_2_and_robot_have_2_locker_and_them_also_have_5_total_caption_and_2_valid_caption() throws LockerRobotManagerException {
         //given
@@ -165,6 +152,114 @@ public class LockerRobotDirectorTest {
                         "     R:    13    8\n" +
                         "         L:    5    3\n" +
                         "         L:    8    5",
+                report);
+    }
+
+    @Test
+    public void should_return_report_when_director_see_report_given_director_managed_1_manager_and_manager_managed_2_lockers_and_2_robot_and_twice_of_locker_have_total_capaction_is_5_and_valid_capaction_is_2_have_valid_capacity_1_and_total_capacity_2_and_robot_have_2_locker_and_one_have_5_total_caption_and_2_valid_caption_and_another_has_11_total_and_8_valid() throws LockerRobotManagerException {
+        //given
+        Locker locker1 = new Locker(5);
+        Locker locker2 = new Locker(5);
+        for(int i = 0;i<3;i++){
+            locker1.store(new Bag(),0);
+            locker2.store(new Bag(),1);
+        }
+
+        Locker robotLocker1 = new Locker(5);
+        Locker robotLocker2 = new Locker(8);
+        for(int i = 0;i <2;i++){
+            robotLocker1.store(new Bag(),0);
+            robotLocker2.store(new Bag(),1);
+        }
+        robotLocker2.store(new Bag(),1);
+        Robot robot = new Robot(Arrays.asList(robotLocker1,robotLocker2));
+
+        Locker robotLocker3 = new Locker(4);
+        Locker robotLocker4 = new Locker(7);
+        for(int i = 0;i <1;i++){
+            robotLocker3.store(new Bag(),0);
+            robotLocker4.store(new Bag(),1);
+        }
+        robotLocker3.store(new Bag(),1);
+        Robot robot2 = new Robot(Arrays.asList(robotLocker3,robotLocker4));
+
+        LockerRobotManager lockerRobotManager = new LockerRobotManager(Arrays.asList(locker1,locker2),Arrays.asList(robot,robot2));
+
+
+        LockerRobotDirector lockerRobotDirector = new LockerRobotDirector(Arrays.asList(lockerRobotManager));
+
+        //when
+        String report = lockerRobotDirector.report();
+        //then
+        Assert.assertEquals(
+                "M:    34    20\n" +
+                        "     L:    5    2\n" +
+                        "     L:    5    2\n" +
+                        "     R:    13    8\n" +
+                        "         L:    5    3\n" +
+                        "         L:    8    5\n" +
+                        "     R:    11    8\n" +
+                        "         L:    4    2\n" +
+                        "         L:    7    6",
+                report);
+    }
+
+    @Test
+    public void should_return_report_when_director_see_report_given_director_managed_2_manager_and_manager_managed_2_lockers_and_1_robot_and_twice_of_locker_have_total_capaction_is_5_and_valid_capaction_is_2_have_valid_capacity_1_and_total_capacity_2_and_robot_have_2_locker_and_them_also_have_5_total_caption_and_2_valid_caption_and_another_has_simailal_as_1st_manager() throws LockerRobotManagerException {
+        //given
+        Locker locker1 = new Locker(5);
+        Locker locker2 = new Locker(5);
+        for(int i = 0;i<3;i++){
+            locker1.store(new Bag(),0);
+            locker2.store(new Bag(),1);
+        }
+
+        Locker robotLocker1 = new Locker(5);
+        Locker robotLocker2 = new Locker(8);
+        for(int i = 0;i <2;i++){
+            robotLocker1.store(new Bag(),0);
+            robotLocker2.store(new Bag(),1);
+        }
+        robotLocker2.store(new Bag(),1);
+        Robot robot = new Robot(Arrays.asList(robotLocker1,robotLocker2));
+        LockerRobotManager lockerRobotManager = new LockerRobotManager(Arrays.asList(locker1,locker2),Arrays.asList(robot));
+
+        Locker locker3 = new Locker(7);
+        Locker locker4 = new Locker(7);
+        for(int i = 0;i<3;i++){
+            locker3.store(new Bag(),0);
+            locker4.store(new Bag(),1);
+        }
+
+        Locker robotLocker3 = new Locker(7);
+        Locker robotLocker4 = new Locker(9);
+        for(int i = 0;i <3;i++){
+            robotLocker3.store(new Bag(),0);
+            robotLocker4.store(new Bag(),1);
+        }
+        robotLocker3.store(new Bag(),1);
+        Robot robot2 = new Robot(Arrays.asList(robotLocker3,robotLocker4));
+        LockerRobotManager lockerRobotManager2 = new LockerRobotManager(Arrays.asList(locker3,locker4),Arrays.asList(robot2));
+
+
+        LockerRobotDirector lockerRobotDirector = new LockerRobotDirector(Arrays.asList(lockerRobotManager,lockerRobotManager2));
+
+        //when
+        String report = lockerRobotDirector.report();
+        //then
+        Assert.assertEquals(
+                "M:    23    12\n" +
+                        "     L:    5    2\n" +
+                        "     L:    5    2\n" +
+                        "     R:    13    8\n" +
+                        "         L:    5    3\n" +
+                        "         L:    8    5\n" +
+                        "M:    30    17\n" +
+                        "     L:    7    4\n" +
+                        "     L:    7    4\n" +
+                        "     R:    16    9\n" +
+                        "         L:    7    3\n" +
+                        "         L:    9    6",
                 report);
     }
 
